@@ -15,4 +15,15 @@ app.use(express.urlencoded({extended:true,limit:"16kb"})) //url se data hai uske
 app.use(express.static("Public")) //public folder hai useme image icon url se jo data ayega wo store hoga 
 app.use(cookieParse())
 
+
+//routes import
+
+import userRouter from './routes/user.routes.js'
+
+//routes declaration 
+
+app.use("/api/v1/users",userRouter)
+
+
+
 export {app}
