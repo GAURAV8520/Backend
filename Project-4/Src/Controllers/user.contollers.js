@@ -43,8 +43,17 @@ const registerUser = asyncHandler(async(req,res)=>{
 
     //check for images check for avtar is present 
 
+    //console.log(req.files)
+
     const avaterLocalPath = req.files?.avatar[0]?.path;
-    const coverImageLocalPath = req.files?.coverImage[0]?.path;
+   // const coverImageLocalPath = req.files?.coverImage[0]?.path;  //--------------> this code is not working when we didnot give an coverimage  to solve this problem we use below code
+
+   let coverImageLocalPath;
+
+   if(req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length >0){
+     coverImageLocalPath = req.files.coverImage[0].path
+   }
+
 
     if(!avaterLocalPath ){
         throw new ApiError(400,"Avatar file is required")
