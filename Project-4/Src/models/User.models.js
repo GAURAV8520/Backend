@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
+import multer from 'multer';
 
 const userSchema = new mongoose.Schema(
     {
@@ -35,15 +36,16 @@ const userSchema = new mongoose.Schema(
         ],
         avatar:{
             type:String,  //form cloudnary
-            required:true
+            requried:true
 
         },
         coverImage:{
             type:String
         },
-        passWord:{
+        password:{
             type:String,
-            required:[true,"password is require"]
+            required: [true, "password is required"]
+           
         },
         refreshToken:{
             type:String,
@@ -55,9 +57,9 @@ const userSchema = new mongoose.Schema(
     }
 )
 userSchema.pre("save",async function(next){
-    if(!this.isModified('passWord')) return next();
+    if(!this.isModified('password')) return next();
 
-    this.passWord=await bcrypt.hash(this.passWord,10)
+    this.password=await bcrypt.hash(this.password,10)
     next()
 })
 

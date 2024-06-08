@@ -7,20 +7,21 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_KEY_SECREATE // Click 'View Credentials' below to copy your API secret
 });
 
-const uploadOnCloudinary =async (localfilePaht)=>{
+const uploadOnCloudinary =async (localFilePath)=>{
     try{
-        if(!localfilePaht) return null;
+        if(!localFilePath) return null;
 
-        const response = await cloudinary.uploader.upload(localfilePaht,{
+        const response = await cloudinary.uploader.upload(localFilePath,{
             resource_type:"auto"
         })
 
-        console.log("file has been uploaded on cloudinary",response.url);
+      //  console.log("file has been uploaded on cloudinary",response.url);
+      fs.unlinkSync(localFilePath)
 
         return response;
     }
     catch(error){
-        fs.unlink(localfilePaht)
+        fs.unlink(localFilePath)
         return null;
         
     }

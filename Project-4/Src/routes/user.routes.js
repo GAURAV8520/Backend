@@ -13,7 +13,7 @@ router.route("/register").post(
                                     //for avatar
         },
         {
-            name:"CoverImage",
+            name:"coverImage",
             maxCount:1
         }
     ]),registerUser)

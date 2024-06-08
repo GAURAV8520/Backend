@@ -33,7 +33,7 @@ const registerUser = asyncHandler(async(req,res)=>{
 
     //check if user already exists : username or email
 
-   const existedUser = User.findOne({
+   const existedUser =await User.findOne({
         $or:[{username},{email}]
     })
 
@@ -44,7 +44,7 @@ const registerUser = asyncHandler(async(req,res)=>{
     //check for images check for avtar is present 
 
     const avaterLocalPath = req.files?.avatar[0]?.path;
-    const coverImageLocalPath = req.files?.CoverImage[0]?.path;
+    const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
     if(!avaterLocalPath ){
         throw new ApiError(400,"Avatar file is required")
@@ -57,7 +57,7 @@ const registerUser = asyncHandler(async(req,res)=>{
         throw new ApiError(400,"Avatar file is required")
     }
 
-   const user= await User.create({
+   const createdUser= await User.create({
         fullName,
         avatar:avatar.url,
         coverImage:coverImage?.url || "",  //agara hai to upload kardo nahi to empty rahane do
@@ -77,9 +77,12 @@ const registerUser = asyncHandler(async(req,res)=>{
     }
 
 
-    return res.status(201).json({
-        new ApiResponse(200,createdUsername,"user registered successefully")
-    })
+    // return res.status(201).json({
+    //     new ApiResponse(200,createdUsername,"user registered successefully")
+    // })
+
+    const response = new ApiResponse(200, createdUser, "User registered successfully");
+    return res.status(response.statusCode).json(response);
 
 
 
