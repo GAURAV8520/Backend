@@ -5,7 +5,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 
-const generateAccessTokenAndRefereshTokens=async(userId){
+const generateAccessTokenAndRefereshTokens=async(userId)=>{
     try{
         const user= await User.findById(userId)
         const accessToken= user.generateAccessToken()
@@ -97,7 +97,7 @@ const registerUser = asyncHandler(async(req,res)=>{
 
     })
 
-    const createdUsername=await User.findById(user._id).select(
+    const createdUsername=await User.findById(createdUser._id).select(
         "-password -refreshToken"                        //kisi field ko mana karna hai to 
     )
 
@@ -132,7 +132,7 @@ const loginUser =asyncHandler (async (req,res)=>{
 
    const {username,email,password}=req.body;
 
-   if(!username || !email){
+   if(!(username || email)){
     throw new ApiError(400,"username or email is required ")
    }
 
